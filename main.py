@@ -36,45 +36,21 @@ ctrlpoints = [
 
     [[-7.5, -1., 2.5], [0., 5, 10], [7.5, -1., 2.5]],
     [[-5., -1., 5], [0., -1., 10], [5, -1., 5]],
-
-    # [[-3.8, -5, 3.8], [0, -5, 5], [3.8, -5, 3.8]],
-    # [[-3.8, -5, -3.8], [0, -5, -5], [3.8, -5, -3.8]],
 ]
 
 glass_part = np.array([
     [3, 3, 0], [3.5, 4, 0], [3.52, 4.1, 0], [3.54, 4.2, 0],
-    [3.54, 6, 0], [3.8, 6.5, 0],  [7.2, 10, 0]
+    [3.54, 6, 0], [3.8, 6.5, 0], [7.2, 10, 0]
 ])
 
 cubeColor = [0.5, 0.5, 1.0]
 cubeSpecular = [1.0, 1.0, 1.0]
-
-flashLightPos = [0.0, 10.0, 10.0]
-flashLightDir = [0.0, -1.0, 0.0]
-flashLightColor = [0.2, 0.2, 0.2]
-
-
-def rgb_i2f(int_rgb: int) -> float:
-    """
-    Converts a RGB int value to float representation,
-    useful when using glColor.
-
-    :param int_rgb:
-    :return:
-    """
-    return round(1 / 255 * int_rgb, 3)
 
 
 def opengl_init():
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_LIGHT0)
     glEnable(GL_COLOR_MATERIAL)
-    # glLightfv(GL_LIGHT0, GL_POSITION, flashLightPos)
-    # glLightfv(GL_LIGHT0, GL_AMBIENT, flashLightColor)
-    # glLightfv(GL_LIGHT0, GL_DIFFUSE, flashLightColor)
-    # glLightfv(GL_LIGHT0, GL_SPECULAR, flashLightColor)
-    # glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, flashLightDir)
-    # glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 12.0)
 
     glMap2f(GL_MAP2_VERTEX_3, 0, 1, 0, 1, ctrlpoints)
     glEnable(GL_MAP2_VERTEX_3)
@@ -105,11 +81,8 @@ def surface_revolution(curve, n_slices, cubeColor=None):
 
     glPushMatrix()
     for islice in range(n_slices):
-        # cubeColor = [islice / n_slices, 1. - islice / n_slices, 1.0]
         glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, cubeColor)
         glBegin(GL_QUAD_STRIP)
-        # print((float)(islice/n_slices), 1. - (float)(islice/n_slices), 1.0)
-        # glColor3f((float)(islice / n_slices), 1. - (float)(islice / n_slices), 1.0)
         glColor3f(*cubeColor)
         if islice == n_slices - 1:
             next_slice = 0
@@ -128,7 +101,6 @@ def surface_revolution(curve, n_slices, cubeColor=None):
 def draw_top_part():
     glPushMatrix()
     glColor3f(1, 1, 0.878)
-    # glColor3f(1, 1, 1)
     glTranslatef(0, 11, 0)
     glEvalMesh2(GL_FILL, 0, 20, 0, 20)
     glPopMatrix()
@@ -218,9 +190,10 @@ def main():
 
         camera.set_look_at()
         lighting.set_lighting_position()
+
         opengl_init()
+
         draw_surface(controls)
-        # draw_sphere_onctrl()
 
         event_capture_loop(controls)
 
