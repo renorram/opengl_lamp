@@ -4,9 +4,7 @@ from pygame.locals import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
-from camera import Camera
-from controls import Controls
-from lighting import Lighting
+from light_bulb import Camera, Controls, Lighting
 
 import math
 import numpy as np
